@@ -1,6 +1,6 @@
 import { View, Button, StyleSheet } from "react-native";
 import ColorPicker, { Panel3 } from "reanimated-color-picker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // function getFormattedDateStr(date) {
@@ -23,27 +23,46 @@ export default function HomeScreen({ route, navigation }) {
   // reminder that new Date() is called every time the component is rendered
   // so a new date object is created every time even though the value is thrown away
   // so to avoid in the future we can use useEffect to only call new Date() once
-  const [date, setDate] = useState(new Date()); // why use new here?
+  // also note that Date() returns a string, not a Date object
+  // and new Date() returns a Date object. weird.
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    // create an async immediate function
+    (async () => {
+      try {
+        // clear AsyncStorage
+
+        await AsyncStorage.removeItem("date_color");
+        // const jsonStr = await AsyncStorage.getItem("date_color");
+        // const date_color = jsonStr != null ? JSON.parse(jsonStr) : [];
+        // setColors(date_color);
+        // console.log(date_color);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
 
   function onColorWheelRelease(data) {
     setPickedColor(data.hex);
     console.log(data.hex);
   }
   async function onDonePress(prop) {
-      
     try {
       const jsonStr = await AsyncStorage.getItem("date_color");
       const date_color = jsonStr != null ? JSON.parse(jsonStr) : [];
       const datestr = date.toISOString();
       // push datestr and pickedColor to date_color
-      date_color.push({ [ datestr ] : pickedColor });
+      date_color.push({ date: datestr, color: pickedColor });
+      // date_color.push({ [ datestr ] : pickedColor });
       // print date_color in human readable format
       console.log(date_color);
       await AsyncStorage.setItem("date_color", JSON.stringify(date_color));
     } catch (e) {
       console.log(e);
     }
-    navigation.navigate("Summary");
+    // navigation.navigate("Summary");
   }
   return (
     <View style={styles.container}>
@@ -59,6 +78,10 @@ export default function HomeScreen({ route, navigation }) {
       </ColorPicker>
       {/* // button when pressed will navigate to SummaryScreen */}
       <Button onPress={onDonePress} title="Done" />
+      <Button
+        onPress={() => navigation.navigate("Summary")}
+        title="go to summary"
+      />
     </View>
   );
 }
