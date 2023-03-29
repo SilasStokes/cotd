@@ -1,14 +1,18 @@
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 const colors = [
-  "#4c00ff",
-  "#ff742e",
-  "#00bfff",
-  "#00ff7f",
-  "#ff00ff",
-  "#ffd700",
-  "#40e0d0",
-  "#ff4500",
-  "#808080",
-  "#8b008b",
+  "#ff9669",
+  "#fff352",
+  "#61ff4f",
+  "#5cffe1",
+  "#5ef4ff",
+  "#70a2ff",
+  "#9a63ff",
+  "#db63ff",
+  "#ff4ad5",
+  "#ff5c74",
 ];
 
 const colors_human = [
@@ -23,13 +27,13 @@ const colors_human = [
   "gray",
   "black",
 ];
-const dates = Array.from({ length: 10 }, (_, i) => {
-  const date = new Date(2023, 2, i + 1); // March 2023
-  const color = colors[i];
+const dates = Array.from({ length: 30 }, (_, i) => {
+  const date = new Date(2023, getRandomInt(3), getRandomInt(28)); // March 2023
+  const color = colors[getRandomInt(10)];
   //   const color = colors_human[i];
   return {
     color: color,
-    date: date.toISOString(),
+    date: date.toISOString().substring(0, 10),
   };
 });
 
