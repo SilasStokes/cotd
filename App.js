@@ -14,8 +14,6 @@ import TestScreen from "./screens/TestScreen";
 
 const Drawer = createDrawerNavigator();
 
-// const useColors = useContext(ColorContext);
-
 const ColorContextProvider = ({ children }) => {
   const [colors, setColors] = useState([]);
 

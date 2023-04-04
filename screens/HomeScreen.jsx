@@ -27,8 +27,6 @@ export default function HomeScreen({ route, navigation }) {
   const [date, setDate] = useState(
     new Date(selectedDate.year, selectedDate.month, selectedDate.day)
   );
-  console.log(route.params);
-  console.log("date: " + date);
 
   useEffect(() => {
     const { day, month, year } = route.params.selectedDate;
@@ -43,7 +41,7 @@ export default function HomeScreen({ route, navigation }) {
   async function onDonePress(prop) {
     const datestr = date.toISOString().substring(0, 10); // this is the YYYY-MM-DD format
     console.log("appending this datestring to date_color: " + datestr);
-    addColor(pickedColor, datestr);
+    // addColor(pickedColor, datestr);
 
     navigation.navigate("Summary");
   }
@@ -59,12 +57,7 @@ export default function HomeScreen({ route, navigation }) {
       >
         <Panel3 />
       </ColorPicker>
-      {/* // button when pressed will navigate to SummaryScreen */}
       <Button onPress={onDonePress} title="Done" />
-      {/* <Button
-        onPress={() => navigation.navigate("Summary")}
-        title="go to summary"
-      /> */}
     </View>
   );
 }

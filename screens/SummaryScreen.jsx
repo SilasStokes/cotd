@@ -15,6 +15,8 @@ import { ColorContext } from "./ColorContext";
 import { useContext } from "react";
 
 export default function SummaryScreen({ route, navigation }) {
+  const today = new Date();
+  const currentMonth = today.getMonth();
   const { colors } = useContext(ColorContext);
   console.log(colors);
   const [coloredDates, setColoredDates] = useState({});
@@ -52,8 +54,6 @@ export default function SummaryScreen({ route, navigation }) {
       </View>
     );
   }
-  const today = new Date();
-  const currentMonth = today.getMonth();
 
   const onDayPressed = (day) => {
     console.log("selected day", day);
