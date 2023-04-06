@@ -2,9 +2,11 @@ import {
   View,
   Button,
   Text,
-  SafeAreaView,
   ScrollView,
   StatusBar,
+  Pressable,
+  StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -70,70 +72,56 @@ export default function SummaryScreen({ route, navigation }) {
   };
 
   return (
-    <CalendarList
-      pastScrollRange={currentMonth}
-      futureScrollRange={11 - currentMonth}
-      scrollEnabled={true}
-      showScrollIndicator={true}
-      markingType={"custom"}
-      markedDates={coloredDates ? coloredDates : {}}
-      onDayPress={onDayPressed}
-    />
+    <SafeAreaView style={styles.container}>
+      <CalendarList
+        pastScrollRange={currentMonth}
+        futureScrollRange={11 - currentMonth}
+        scrollEnabled={true}
+        showScrollIndicator={true}
+        markingType={"custom"}
+        markedDates={coloredDates ? coloredDates : {}}
+        onDayPress={onDayPressed}
+      />
+      <View style={styles.bottomBar}>
+        <Pressable style={styles.button} onPress={(e) => console.log(e)}>
+          <Text style={styles.text}>{"export"}</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
-// colors.forEach((color, index) => {
-//   const yyyy_mm_dd = color.date.substring(0, 10);
-//   coloredDates[yyyy_mm_dd] = {
-//     customStyles: {
-//       container: {
-//         backgroundColor: color.color,
-//         borderRadius: 5,
-//       },
-//       text: {
-//         color: "black",
-//       },
-//     },
-//     disableTouchEvent: true,
-//   };
-// });
-
-//   colors.forEach((color, index) => {
-//     const yyyy_mm_dd = color.date.substring(0, 10);
-//     coloredDates[yyyy_mm_dd] = {
-//       selected: true,
-//       disableTouchEvent: true,
-//       dotColor: color.color,
-//     };
-//   });
-
-// useEffect was not being called when navigating back to this screen
-// so useFocusEffect is used instead
-// useFocusEffect(
-//   React.useCallback(() => {
-//     (async () => {
-//       try {
-//         const jsonStr = await AsyncStorage.getItem("date_color");
-//         const date_color = jsonStr != null ? JSON.parse(jsonStr) : [];
-//         setColors(date_color);
-//         console.log(date_color);
-//       } catch (e) {
-//         console.log(e);
-//       }
-//     })();
-//   }, [])
-// );
-
-// getting the colors from AsyncStorage
-// useEffect(() => {
-//   (async () => {
-//     try {
-//       const jsonStr = await AsyncStorage.getItem("date_color");
-//       const date_color = jsonStr != null ? JSON.parse(jsonStr) : [];
-//       setColors(date_color);
-//       console.log(date_color);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   })();
-// }, []);
+const styles = StyleSheet.create({
+  container: {
+    position: "relative",
+  },
+  bottomBar: {
+    position: "absolute",
+    width: "100%",
+    height: "12%",
+    // top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // backgroundColor: "green",
+    // padding: 30,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "black",
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+});

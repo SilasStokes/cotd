@@ -25,15 +25,10 @@ const ColorContextProvider = ({ children }) => {
       { color: hexcolorstr, date: datestr },
     ]);
   };
+
   useEffect(() => {
-    (async () => {
-      try {
-        await AsyncStorage.setItem("date_color", JSON.stringify(dates));
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    AsyncStorage.setItem("date_color", JSON.stringify(colors));
+  }, [colors]);
 
   useEffect(() => {
     AsyncStorage.getItem("date_color").then((value) => {

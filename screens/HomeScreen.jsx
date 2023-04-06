@@ -41,7 +41,7 @@ export default function HomeScreen({ route, navigation }) {
   async function onDonePress(prop) {
     const datestr = date.toISOString().substring(0, 10); // this is the YYYY-MM-DD format
     console.log("appending this datestring to date_color: " + datestr);
-    // addColor(pickedColor, datestr);
+    addColor(pickedColor, datestr);
 
     navigation.navigate("Summary");
   }
